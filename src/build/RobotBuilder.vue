@@ -1,10 +1,20 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import availableParts from '../data/parts'
 import {
   getPrevValidIndex,
   getNextValidIndex,
 } from '@/helpers/arrayValidations.js'
+
+const selectedRobot = computed(() => {
+  return {
+    head: availableParts.heads[selectedHeadIndex.value],
+    torso: availableParts.torsos[selectedTorsoIndex.value],
+    base: availableParts.bases[selectedBaseIndex.value],
+    rightArm: availableParts.arms[selectedRightArmIndex.value],
+    leftArm: availableParts.arms[selectedLeftArmIndex.value],
+  }
+})
 
 const selectedHeadIndex = ref(0)
 const selectedTorsoIndex = ref(0)
@@ -79,40 +89,31 @@ const prevBase = () => {
   <div>
     <div class="top-row">
       <div class="top part">
-        <img :src="availableParts.heads[selectedHeadIndex].src" title="head" />
+        <img :src="selectedRobot.head.src" title="head" />
         <button class="prev-selector" @click="prevHeads()">&#9668;</button>
         <button class="next-selector" @click="nextHeads()">&#9658;</button>
       </div>
     </div>
     <div class="middle-row">
       <div class="left part">
-        <img
-          :src="availableParts.arms[selectedLeftArmIndex].src"
-          title="left arm"
-        />
+        <img :src="selectedRobot.leftArm.src" title="left arm" />
         <button class="prev-selector" @click="prevLeftArm()">&#9650;</button>
         <button class="next-selector" @click="nextLeftArm()">&#9660;</button>
       </div>
       <div class="center part">
-        <img
-          :src="availableParts.torsos[selectedTorsoIndex].src"
-          title="torso"
-        />
+        <img :src="selectedRobot.torso.src" title="torso" />
         <button class="prev-selector" @click="prevTorso()">&#9668;</button>
         <button class="next-selector" @click="nextTorso()">&#9658;</button>
       </div>
       <div class="right part">
-        <img
-          :src="availableParts.arms[selectedRightArmIndex].src"
-          title="right arm"
-        />
+        <img :src="selectedRobot.rightArm.src" title="right arm" />
         <button class="prev-selector" @click="prevRightArm()">&#9650;</button>
         <button class="next-selector" @click="nextRightArm()">&#9660;</button>
       </div>
     </div>
     <div class="bottom-row">
       <div class="bottom part">
-        <img :src="availableParts.bases[selectedBaseIndex].src" title="base" />
+        <img :src="selectedRobot.base.src" title="base" />
         <button class="prev-selector" @click="prevBase()">&#9668;</button>
         <button class="next-selector" @click="nextBase()">&#9658;</button>
       </div>
