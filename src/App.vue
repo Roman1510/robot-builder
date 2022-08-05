@@ -1,11 +1,13 @@
 <script setup>
 import RobotBuilder from './build/RobotBuilder.vue'
+import SearchComponent from './search/SearchComponent.vue'
 </script>
 
 <template>
   <main>
     <RobotBuilder />
   </main>
+  <SearchComponent />
 </template>
 
 <style>

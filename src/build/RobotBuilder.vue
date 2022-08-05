@@ -6,6 +6,13 @@ import {
   getNextValidIndex,
 } from '@/helpers/arrayValidations.js'
 
+const selectedHeadIndex = ref(0)
+const selectedTorsoIndex = ref(0)
+const selectedBaseIndex = ref(0)
+const selectedRightArmIndex = ref(0)
+const selectedLeftArmIndex = ref(0)
+const cart = ref([])
+
 const selectedRobot = computed(() => {
   return {
     head: availableParts.heads[selectedHeadIndex.value],
@@ -16,11 +23,9 @@ const selectedRobot = computed(() => {
   }
 })
 
-const selectedHeadIndex = ref(0)
-const selectedTorsoIndex = ref(0)
-const selectedBaseIndex = ref(0)
-const selectedRightArmIndex = ref(0)
-const selectedLeftArmIndex = ref(0)
+const saleBorderClass = computed(() => {
+  return selectedRobot.value.head.onSale ? 'sale-border' : ''
+})
 
 const nextHeads = () => {
   selectedHeadIndex.value = getNextValidIndex(
@@ -34,7 +39,6 @@ const prevHeads = () => {
     availableParts.heads.length
   )
 }
-
 const nextTorso = () => {
   selectedTorsoIndex.value = getNextValidIndex(
     selectedTorsoIndex.value,
@@ -47,7 +51,6 @@ const prevTorso = () => {
     availableParts.torsos.length
   )
 }
-
 const nextLeftArm = () => {
   selectedLeftArmIndex.value = getNextValidIndex(
     selectedLeftArmIndex.value,
@@ -84,11 +87,29 @@ const prevBase = () => {
     availableParts.bases.length
   )
 }
+
+const addToCard = () => {
+  const robot = selectedRobot.value
+  const cost =
+    robot.head.cost +
+    robot.base.cost +
+    robot.torso.cost +
+    robot.leftArm.cost +
+    robot.rightArm.cost
+
+  cart.value.push(Object.assign({}, robot, { cost }))
+}
 </script>
 <template>
-  <div>
+  <div class="content">
+    <button class="add-to-cart" @click="addToCard()">Add to cart</button>
     <div class="top-row">
-      <div class="top part">
+      <div :class="[saleBorderClass, 'top', 'part']">
+        <div class="robot-name">
+          {{ selectedRobot.head.title }}
+          <span v-if="selectedRobot.head.onSale" class="sale">SALE</span>
+        </div>
+
         <img :src="selectedRobot.head.src" title="head" />
         <button class="prev-selector" @click="prevHeads()">&#9668;</button>
         <button class="next-selector" @click="nextHeads()">&#9658;</button>
@@ -118,6 +139,23 @@ const prevBase = () => {
         <button class="next-selector" @click="nextBase()">&#9658;</button>
       </div>
     </div>
+  </div>
+  <div>
+    <h1>Cart</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Robot</th>
+          <th class="cost">Cost</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(robot, index) in cart" :key="index">
+          <td>{{ robot.head.title }}</td>
+          <td class="cost">{{ robot.cost }}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 <style scoped>
@@ -209,5 +247,42 @@ const prevBase = () => {
 }
 .right .next-selector {
   right: -3px;
+}
+
+.robot-name {
+  position: absolute;
+  top: -25px;
+  text-align: center;
+  width: 100%;
+}
+
+.sale {
+  color: red;
+}
+
+.content {
+  position: relative;
+}
+.add-to-cart {
+  position: absolute;
+  right: 30px;
+  width: 220px;
+  padding: 3px;
+  z-index: 1;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 5px;
+  padding-right: 20px;
+}
+
+.cost {
+  text-align: right;
+}
+
+.sale-border {
+  border: 3px solid red;
 }
 </style>
