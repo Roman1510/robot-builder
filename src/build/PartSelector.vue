@@ -8,6 +8,13 @@
 </template>
 
 <script setup>
+/*
+  1) add border class computation
+  2) add emits from the component
+  3) add the emits outputs to the parent
+  4) refactor in the way so that it works without emits
+  5) add validators to the props
+*/
 import { ref, computed, defineProps } from 'vue'
 const props = defineProps({
   parts: { type: Object, required: true },
