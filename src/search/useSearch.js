@@ -1,4 +1,4 @@
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import parts from '../data/parts'
 
 const allParts = [
@@ -26,8 +26,6 @@ export default function useSearch(originalSearchTerm) {
   }
 
   searchInventory(originalSearchTerm)
-
-  onMounted(() => console.log('Mounted: useSearch'))
 
   return { searchResults: results, search: searchInventory }
 }

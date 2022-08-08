@@ -1,4 +1,4 @@
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed } from 'vue'
 
 export default function usePagination(filteredSearchResults) {
   const pageSize = 5
@@ -9,8 +9,6 @@ export default function usePagination(filteredSearchResults) {
   const prevPage = () => {
     currentPage.value -= 1
   }
-
-  onMounted(() => console.log('Mounted: useSearch'))
 
   const currentStartIndex = computed(
     () => (currentPage.value - 1) * pageSize + 1

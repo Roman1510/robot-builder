@@ -1,13 +1,17 @@
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed } from 'vue'
 
 function filterResults(results, filters) {
-  return results.value.filter((part) =>
-    filters.value.every((filter) => {
-      const filterField = Object.keys(filter)[0]
-      const filterValue = filter[filterField]
-      return part[filterField] === filterValue
+  let finalResult = []
+
+  filters.value.forEach((filter) => {
+    const filteredResults = results.value.filter((part) => {
+      const filterKey = Object.keys(filter)[0]
+      const filterValue = filter[filterKey]
+      return part[filterKey] === filterValue
     })
-  )
+    finalResult = finalResult.concat(filteredResults)
+  })
+  return finalResult.length ? finalResult : results.value
 }
 
 export default function useFilters(searchResults) {
@@ -17,8 +21,6 @@ export default function useFilters(searchResults) {
   const clearFilters = () => {
     filters.value = []
   }
-
-  onMounted(() => console.log('Mounted: useFilters'))
 
   const filteredResults = computed(() => filterResults(searchResults, filters))
 
