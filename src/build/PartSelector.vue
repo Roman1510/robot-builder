@@ -9,7 +9,6 @@
 
 <script setup>
 import { ref, computed, defineProps } from 'vue'
-
 const props = defineProps({
   parts: { type: Object, required: true },
   position: { type: String, required: true },
