@@ -1,5 +1,5 @@
 <template>
-  <div class="part">
+  <div class="part" :class="[position]">
     <img :src="selectedPart.src" title="arm" />
     <button @click="selectPreviousPart()" class="prev-selector"></button>
     <button @click="selectNextPart()" class="next-selector"></button>
@@ -8,13 +8,17 @@
 </template>
 
 <script setup>
-import { ref, computed /*defineProps*/ } from 'vue'
+import { ref, computed, defineProps } from 'vue'
 
-import availableParts from '../data/parts'
-const parts = availableParts.heads
-
-// const props = defineProps({})
+const props = defineProps({
+  parts: { type: Object, required: true },
+  position: { type: String, required: true },
+})
 const selectedPartIndex = ref(0)
+
+// const saleBorderClass = computed(() => {
+//   return props.parts.value[props.position].onSale ? 'sale-border' : ''
+// })
 
 function getPreviousValidIndex(index, length) {
   const deprecatedIndex = index - 1
@@ -26,19 +30,19 @@ function getNextValidIndex(index, length) {
 }
 
 const selectedPart = computed(() => {
-  return parts[selectedPartIndex.value]
+  return props.parts[selectedPartIndex.value]
 })
 
 const selectNextPart = () => {
   selectedPartIndex.value = getNextValidIndex(
     selectedPartIndex.value,
-    parts.length
+    props.parts.length
   )
 }
 const selectPreviousPart = () => {
   selectedPartIndex.value = getPreviousValidIndex(
     selectedPartIndex.value,
-    parts.length
+    props.parts.length
   )
 }
 </script>

@@ -1,6 +1,8 @@
 <script setup>
 import { ref, computed } from 'vue'
 import PartSelector from './PartSelector.vue'
+import availableParts from '../data/parts'
+
 const cart = ref([])
 
 const selectedRobot = computed(() => {
@@ -11,10 +13,6 @@ const selectedRobot = computed(() => {
     rightArm: {},
     leftArm: {},
   }
-})
-
-const saleBorderClass = computed(() => {
-  return selectedRobot.value.head.onSale ? 'sale-border' : ''
 })
 
 const addToCard = () => {
@@ -33,29 +31,19 @@ const addToCard = () => {
   <div class="content">
     <button class="add-to-cart" @click="addToCard()">Add to cart</button>
     <div class="top-row">
-      <div :class="[saleBorderClass, 'top', 'part']">
-        <!-- <div class="robot-name">
-          {{ selectedRobot.head.title }}
-          <span v-if="selectedRobot.head.onSale" class="sale">SALE</span>
-        </div> -->
-        <PartSelector />
+      <div class="robot-name">
+        {{ selectedRobot.head.title }}
+        <span v-if="selectedRobot.head.onSale" class="sale">SALE</span>
       </div>
+      <PartSelector :parts="availableParts.heads" position="top" />
     </div>
     <div class="middle-row">
-      <div class="left part">
-        <PartSelector />
-      </div>
-      <div class="center part">
-        <PartSelector />
-      </div>
-      <div class="right part">
-        <PartSelector />
-      </div>
+      <PartSelector :parts="availableParts.arms" position="left" />
+      <PartSelector :parts="availableParts.torsos" position="center" />
+      <PartSelector :parts="availableParts.arms" position="right" />
     </div>
     <div class="bottom-row">
-      <div class="bottom part">
-        <PartSelector />
-      </div>
+      <PartSelector :parts="availableParts.bases" position="bottom" />
     </div>
   </div>
   <div>
