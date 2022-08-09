@@ -1,22 +1,20 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import PartSelector from './PartSelector.vue'
 import availableParts from '../data/parts'
 
 const cart = ref([])
 
-const selectedRobot = computed(() => {
-  return {
-    head: {},
-    torso: {},
-    base: {},
-    rightArm: {},
-    leftArm: {},
-  }
+const selectedRobot = ref({
+  head: {},
+  torso: {},
+  base: {},
+  rightArm: {},
+  leftArm: {},
 })
 
 const addToCard = () => {
-  const robot = selectedRobot.value
+  const robot = selectedRobot
   const cost =
     robot.head.cost +
     robot.base.cost +
@@ -35,15 +33,35 @@ const addToCard = () => {
         {{ selectedRobot.head.title }}
         <span v-if="selectedRobot.head.onSale" class="sale">SALE</span>
       </div>
-      <PartSelector :parts="availableParts.heads" position="top" />
+      <PartSelector
+        :parts="availableParts.heads"
+        position="top"
+        @update="(part) => (selectedRobot.head = part)"
+      />
     </div>
     <div class="middle-row">
-      <PartSelector :parts="availableParts.arms" position="left" />
-      <PartSelector :parts="availableParts.torsos" position="center" />
-      <PartSelector :parts="availableParts.arms" position="right" />
+      <PartSelector
+        :parts="availableParts.arms"
+        position="left"
+        @update="(part) => (selectedRobot.leftArm = part)"
+      />
+      <PartSelector
+        :parts="availableParts.torsos"
+        position="center"
+        @update="(part) => (selectedRobot.torso = part)"
+      />
+      <PartSelector
+        :parts="availableParts.arms"
+        position="right"
+        @update="(part) => (selectedRobot.rightArm = part)"
+      />
     </div>
     <div class="bottom-row">
-      <PartSelector :parts="availableParts.bases" position="bottom" />
+      <PartSelector
+        :parts="availableParts.bases"
+        position="bottom"
+        @update="(part) => (selectedRobot.base = part)"
+      />
     </div>
   </div>
   <div>

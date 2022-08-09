@@ -1,5 +1,5 @@
 <template>
-  <div class="part" :class="[position]">
+  <div class="part" :class="[position, saleBorderClass]">
     <img :src="selectedPart.src" title="arm" />
     <button @click="selectPreviousPart()" class="prev-selector"></button>
     <button @click="selectNextPart()" class="next-selector"></button>
@@ -9,47 +9,55 @@
 
 <script setup>
 /*
-  1) add border class computation
-  2) add emits from the component
-  3) add the emits outputs to the parent
-  4) refactor in the way so that it works without emits
-  5) add validators to the props
+  1) refactor in the way so that it works without emits
+  2) add mini-map
 */
-import { ref, computed, defineProps } from 'vue'
+import { ref, computed } from 'vue'
 const props = defineProps({
   parts: { type: Object, required: true },
-  position: { type: String, required: true },
+  position: {
+    type: String,
+    required: true,
+    validator: (value) => {
+      return ['top', 'left', 'center', 'right', 'bottom'].includes(value)
+    },
+  },
 })
+const emit = defineEmits(['update'])
+
 const selectedPartIndex = ref(0)
-
-// const saleBorderClass = computed(() => {
-//   return props.parts.value[props.position].onSale ? 'sale-border' : ''
-// })
-
-function getPreviousValidIndex(index, length) {
-  const deprecatedIndex = index - 1
-  return deprecatedIndex < 0 ? length - 1 : deprecatedIndex
-}
-function getNextValidIndex(index, length) {
-  const incrementedIndex = index + 1
-  return incrementedIndex > length - 1 ? 0 : incrementedIndex
-}
 
 const selectedPart = computed(() => {
   return props.parts[selectedPartIndex.value]
 })
+emit('update', selectedPart.value)
+
+const saleBorderClass = computed(() => {
+  return selectedPart.value.onSale ? 'sale-border' : ''
+})
+
+const getPreviousValidIndex = (index, length) => {
+  const deprecatedIndex = index - 1
+  return deprecatedIndex < 0 ? length - 1 : deprecatedIndex
+}
+const getNextValidIndex = (index, length) => {
+  const incrementedIndex = index + 1
+  return incrementedIndex > length - 1 ? 0 : incrementedIndex
+}
 
 const selectNextPart = () => {
   selectedPartIndex.value = getNextValidIndex(
     selectedPartIndex.value,
     props.parts.length
   )
+  emit('update', selectedPart.value)
 }
 const selectPreviousPart = () => {
   selectedPartIndex.value = getPreviousValidIndex(
     selectedPartIndex.value,
     props.parts.length
   )
+  emit('update', selectedPart.value)
 }
 </script>
 
