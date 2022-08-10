@@ -1,18 +1,7 @@
-<template>
-  <div class="part" :class="[position, saleBorderClass]">
-    <img :src="selectedPart.src" title="arm" />
-    <button @click="selectPreviousPart()" class="prev-selector"></button>
-    <button @click="selectNextPart()" class="next-selector"></button>
-    <span class="sale" v-show="selectedPart.onSale">Sale!</span>
-  </div>
-</template>
-
 <script setup>
-/*
-  1) refactor in the way so that it works without emits
-  2) add mini-map
-*/
-import { ref, computed } from 'vue'
+import { ref, computed, onUpdated } from 'vue'
+
+const showPartInfo = ref(false)
 const props = defineProps({
   parts: { type: Object, required: true },
   position: {
@@ -24,13 +13,16 @@ const props = defineProps({
   },
 })
 const emit = defineEmits(['update'])
-
 const selectedPartIndex = ref(0)
 
 const selectedPart = computed(() => {
   return props.parts[selectedPartIndex.value]
 })
 emit('update', selectedPart.value)
+
+onUpdated(() => {
+  emit('update', selectedPart.value)
+})
 
 const saleBorderClass = computed(() => {
   return selectedPart.value.onSale ? 'sale-border' : ''
@@ -50,17 +42,36 @@ const selectNextPart = () => {
     selectedPartIndex.value,
     props.parts.length
   )
-  emit('update', selectedPart.value)
 }
 const selectPreviousPart = () => {
   selectedPartIndex.value = getPreviousValidIndex(
     selectedPartIndex.value,
     props.parts.length
   )
-  emit('update', selectedPart.value)
 }
 </script>
-
+<template>
+  <div class="part" :class="[position, saleBorderClass]">
+    <img
+      :src="selectedPart.src"
+      title="arm"
+      @click="showPartInfo = !showPartInfo"
+    />
+    <button @click="selectPreviousPart()" class="prev-selector"></button>
+    <button @click="selectNextPart()" class="next-selector"></button>
+    <span class="sale" v-show="selectedPart.onSale">Sale!</span>
+    <teleport to="#partInfo" v-if="showPartInfo">
+      <div>
+        <div>
+          {{ selectedPart.cost }} {{ selectedPart.title }}
+          {{ selectedPart.type }}
+        </div>
+        <div>{{ selectedPart.description }}</div>
+        <hr />
+      </div>
+    </teleport>
+  </div>
+</template>
 <style scoped>
 .part {
   position: relative;

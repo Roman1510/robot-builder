@@ -2,9 +2,9 @@
 import { ref } from 'vue'
 import PartSelector from './PartSelector.vue'
 import availableParts from '../data/parts'
+import PreviewRobot from './PreviewRobot.vue'
 
 const cart = ref([])
-
 const selectedRobot = ref({
   head: {},
   torso: {},
@@ -14,20 +14,30 @@ const selectedRobot = ref({
 })
 
 const addToCard = () => {
-  const robot = selectedRobot
+  const robot = selectedRobot.value
   const cost =
     robot.head.cost +
     robot.base.cost +
     robot.torso.cost +
     robot.leftArm.cost +
     robot.rightArm.cost
-
   cart.value.push(Object.assign({}, robot, { cost }))
 }
 </script>
 <template>
   <div class="content">
-    <button class="add-to-cart" @click="addToCard()">Add to cart</button>
+    <div class="part-info" id="partInfo"></div>
+    <div class="preview">
+      <PreviewRobot
+        :base="selectedRobot.base.src"
+        :head="selectedRobot.head.src"
+        :left-arm="selectedRobot.leftArm.src"
+        :right-arm="selectedRobot.rightArm.src"
+        :torso="selectedRobot.torso.src"
+      />
+      <button class="add-to-cart" @click="addToCard()">Add to cart</button>
+    </div>
+
     <div class="top-row">
       <div class="robot-name">
         {{ selectedRobot.head.title }}
@@ -189,8 +199,7 @@ const addToCard = () => {
 }
 .add-to-cart {
   position: absolute;
-  right: 30px;
-  width: 220px;
+  width: 200px;
   padding: 3px;
   z-index: 1;
 }
@@ -208,5 +217,36 @@ td {
 
 .sale-border {
   border: 3px solid red;
+}
+
+.preview {
+  position: absolute;
+  top: -20px;
+  right: 0;
+  width: 210px;
+  height: 210px;
+  padding: 5px;
+}
+.preview-content {
+  border: 1px solid #999;
+}
+.preview img {
+  width: 50px;
+  height: 50px;
+}
+.rotate-right {
+  transform: rotate(90deg);
+}
+.rotate-left {
+  transform: rotate(-90deg);
+}
+
+.part-info {
+  position: absolute;
+  top: -20px;
+  left: 0;
+  width: 210px;
+  height: 210px;
+  padding: 5px;
 }
 </style>
