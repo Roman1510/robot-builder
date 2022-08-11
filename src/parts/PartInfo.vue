@@ -1,7 +1,14 @@
 <script setup>
-import { ref } from 'vue'
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
+import parts from '../data/parts.js'
 
-const part = ref({ title: 'Part title', description: 'part description' })
+const route = useRoute()
+const { partType, id } = route.params
+
+const part = computed(() => {
+  return parts[partType].find((part) => part.id == id)
+})
 </script>
 <template>
   <div>

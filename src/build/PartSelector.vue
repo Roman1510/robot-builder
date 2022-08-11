@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed, onUpdated } from 'vue'
+import router from '../router'
 
-const showPartInfo = ref(false)
 const props = defineProps({
   parts: { type: Object, required: true },
   position: {
@@ -49,27 +49,23 @@ const selectPreviousPart = () => {
     props.parts.length
   )
 }
+
+const showPartInfo = () => {
+  router.push({
+    name: 'Parts',
+    params: {
+      id: selectedPart.value.id,
+      partType: selectedPart.value.type,
+    },
+  })
+}
 </script>
 <template>
   <div class="part" :class="[position, saleBorderClass]">
-    <img
-      :src="selectedPart.src"
-      title="arm"
-      @click="showPartInfo = !showPartInfo"
-    />
+    <img :src="selectedPart.src" title="arm" @click="showPartInfo()" />
     <button @click="selectPreviousPart()" class="prev-selector"></button>
     <button @click="selectNextPart()" class="next-selector"></button>
     <span class="sale" v-show="selectedPart.onSale">Sale!</span>
-    <teleport to="#partInfo" v-if="showPartInfo">
-      <div>
-        <div>
-          {{ selectedPart.cost }} {{ selectedPart.title }}
-          {{ selectedPart.type }}
-        </div>
-        <div>{{ selectedPart.description }}</div>
-        <hr />
-      </div>
-    </teleport>
   </div>
 </template>
 <style scoped>
@@ -98,6 +94,7 @@ const selectPreviousPart = () => {
 }
 .part img {
   width: 165px;
+  cursor: pointer;
 }
 .top {
   border-bottom: none;

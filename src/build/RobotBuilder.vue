@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import PartSelector from './PartSelector.vue'
 import availableParts from '../data/parts'
 import PreviewRobot from './PreviewRobot.vue'
+import CollapsibleArea from '../shared/CollapsibleArea.vue'
 
 const cart = ref([])
 const selectedRobot = ref({
@@ -28,14 +29,17 @@ const addToCard = () => {
   <div class="content">
     <div class="part-info" id="partInfo"></div>
     <div class="preview">
-      <PreviewRobot
-        :base="selectedRobot.base.src"
-        :head="selectedRobot.head.src"
-        :left-arm="selectedRobot.leftArm.src"
-        :right-arm="selectedRobot.rightArm.src"
-        :torso="selectedRobot.torso.src"
-      />
-      <button class="add-to-cart" @click="addToCard()">Add to cart</button>
+      <CollapsibleArea
+        ><PreviewRobot
+          :base="selectedRobot.base.src"
+          :head="selectedRobot.head.src"
+          :left-arm="selectedRobot.leftArm.src"
+          :right-arm="selectedRobot.rightArm.src"
+          :torso="selectedRobot.torso.src"
+      /></CollapsibleArea>
+      <div>
+        <button class="add-to-cart" @click="addToCard()">Add to cart</button>
+      </div>
     </div>
 
     <div class="top-row">

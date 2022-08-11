@@ -1,8 +1,4 @@
-<script setup>
-// 1) use slots to make collapsable mini-map
-// 2) add routing from the image of the partselector
-// 3) remove the part-selector teleporting functionality
-</script>
+<script setup></script>
 
 <template>
   <div class="header">
