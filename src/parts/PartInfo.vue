@@ -1,13 +1,17 @@
 <script setup>
 import { computed } from 'vue'
-import { useRoute } from 'vue-router'
 import parts from '../data/parts.js'
 
-const route = useRoute()
-const { partType, id } = route.params
+const props = defineProps({
+  partType: { type: String },
+  id: {
+    type: [String, Number],
+    validator: (value) => Number.isInteger(Number(value)),
+  },
+})
 
 const part = computed(() => {
-  return parts[partType].find((part) => part.id == id)
+  return parts[props.partType].find((part) => part.id == props.id)
 })
 </script>
 <template>
