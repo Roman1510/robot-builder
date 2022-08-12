@@ -4,6 +4,7 @@ import PartSelector from './PartSelector.vue'
 import availableParts from '../data/parts'
 import PreviewRobot from './PreviewRobot.vue'
 import CollapsibleArea from '../shared/CollapsibleArea.vue'
+import { onBeforeRouteLeave } from 'vue-router'
 
 const cart = ref([])
 const selectedRobot = ref({
@@ -24,6 +25,11 @@ const addToCard = () => {
     robot.rightArm.cost
   cart.value.push(Object.assign({}, robot, { cost }))
 }
+
+onBeforeRouteLeave(() => {
+  const response = confirm('u rilly wanna quit?')
+  return response
+})
 </script>
 <template>
   <div class="content">

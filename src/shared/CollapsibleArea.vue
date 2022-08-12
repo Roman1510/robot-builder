@@ -1,11 +1,11 @@
 <script setup>
 import { ref } from 'vue'
-const open = ref(false)
+const open = ref(true)
 </script>
 <template>
-  <div class="header">
-    <div v-if="open" @click="open = !open">TOGGLE ON</div>
-    <div v-if="!open" @click="open = !open">TOGGLE OFF</div>
+  <div class="header" @click="open = !open">
+    <span v-if="open">Hide</span>
+    <span v-if="!open">Show</span>
   </div>
   <slot v-if="open"></slot>
 </template>
