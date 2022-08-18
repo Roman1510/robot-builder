@@ -7,6 +7,7 @@ import CollapsibleArea from '../shared/CollapsibleArea.vue'
 import { onBeforeRouteLeave } from 'vue-router'
 
 const cart = ref([])
+const addedToCard = ref(false)
 const selectedRobot = ref({
   head: {},
   torso: {},
@@ -24,9 +25,13 @@ const addToCard = () => {
     robot.leftArm.cost +
     robot.rightArm.cost
   cart.value.push(Object.assign({}, robot, { cost }))
+  addedToCard.value = true
 }
 
+// watchEffect(())
+
 onBeforeRouteLeave(() => {
+  if (addedToCard.value == true) return
   const response = confirm('u rilly wanna quit?')
   return response
 })

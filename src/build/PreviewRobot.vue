@@ -1,6 +1,4 @@
 <script setup>
-import { defineProps } from 'vue'
-
 const props = defineProps({
   head: { type: String },
   torso: { type: String },
