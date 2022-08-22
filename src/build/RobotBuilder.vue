@@ -5,8 +5,9 @@ import availableParts from '../data/parts'
 import PreviewRobot from './PreviewRobot.vue'
 import CollapsibleArea from '../shared/CollapsibleArea.vue'
 import { onBeforeRouteLeave } from 'vue-router'
+import { useStore } from 'vuex'
 
-const cart = ref([])
+const store = useStore()
 const addedToCard = ref(false)
 const selectedRobot = ref({
   head: {},
@@ -24,13 +25,12 @@ const addToCard = () => {
     robot.torso.cost +
     robot.leftArm.cost +
     robot.rightArm.cost
-  cart.value.push(Object.assign({}, robot, { cost }))
+  store.commit('addRobotToCart', { ...selectedRobot.value, cost })
   addedToCard.value = true
 }
 
-// watchEffect(())
-
-onBeforeRouteLeave(() => {
+onBeforeRouteLeave((to) => {
+  if (to.name == 'Cart') return
   if (addedToCard.value == true) return
   const response = confirm('u rilly wanna quit?')
   return response
@@ -88,23 +88,6 @@ onBeforeRouteLeave(() => {
         @update="(part) => (selectedRobot.base = part)"
       />
     </div>
-  </div>
-  <div>
-    <h1>Cart</h1>
-    <table>
-      <thead>
-        <tr>
-          <th>Robot</th>
-          <th class="cost">Cost</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(robot, index) in cart" :key="index">
-          <td>{{ robot.head.title }}</td>
-          <td class="cost">{{ robot.cost }}</td>
-        </tr>
-      </tbody>
-    </table>
   </div>
 </template>
 <style scoped>

@@ -9,6 +9,7 @@ import RobotTorsos from '../parts/RobotTorsos.vue'
 import RobotBases from '../parts/RobotBases.vue'
 import SidebarStandard from '../sidebars/SideBarStandard.vue'
 import SidebarBuild from '../sidebars/SidebarBuild.vue'
+import ShopingCart from '../cart/ShopingCart.vue'
 
 export default createRouter({
   history: createWebHistory(),
@@ -49,6 +50,11 @@ export default createRouter({
       beforeEnter: (to) => {
         return Number.isInteger(Number(to.params.id))
       },
+    },
+    {
+      path: '/cart',
+      name: 'Cart',
+      component: ShopingCart,
     },
   ],
 })

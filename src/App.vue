@@ -1,4 +1,13 @@
-<script setup></script>
+<script setup>
+import { computed } from 'vue'
+import { useStore } from 'vuex'
+
+const store = useStore()
+
+const counter = computed(() => {
+  return store.state.cart.length
+})
+</script>
 
 <template>
   <div class="header">
@@ -14,6 +23,14 @@
           <router-link class="nav-link" :to="{ name: 'Build' }">
             Build</router-link
           >
+        </li>
+        <li class="nav-item cart">
+          <router-link class="nav-link" :to="{ name: 'Cart' }">
+            Cart</router-link
+          >
+          <div v-if="counter > 0" class="cart-items">
+            {{ counter }}
+          </div>
         </li>
       </ul>
     </nav>
@@ -84,5 +101,23 @@ ul {
   background-color: #aaa;
   width: 100px;
   min-height: 300px;
+}
+
+.nav-item.cart {
+  position: relative;
+  margin-left: auto;
+  border-right: none;
+}
+
+.cart-items {
+  position: absolute;
+  top: -5px;
+  right: -9px;
+  font-size: 18px;
+  width: 20px;
+  text-align: center;
+  display: inline-block;
+  border-radius: 100px;
+  background-color: mediumseagreen;
 }
 </style>
