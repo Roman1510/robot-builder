@@ -1,7 +1,6 @@
 <script setup>
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import PartSelector from './PartSelector.vue'
-import availableParts from '../data/parts'
 import PreviewRobot from './PreviewRobot.vue'
 import CollapsibleArea from '../shared/CollapsibleArea.vue'
 import { onBeforeRouteLeave } from 'vue-router'
@@ -15,6 +14,12 @@ const selectedRobot = ref({
   base: {},
   rightArm: {},
   leftArm: {},
+})
+
+store.dispatch('getParts')
+
+const availableParts = computed(() => {
+  return store.state.parts
 })
 
 const addToCard = () => {
@@ -37,7 +42,7 @@ onBeforeRouteLeave((to) => {
 })
 </script>
 <template>
-  <div class="content">
+  <div v-if="availableParts" class="content">
     <div class="part-info" id="partInfo"></div>
     <div class="preview">
       <CollapsibleArea

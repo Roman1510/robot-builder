@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import parts from '../data/parts'
+import parts from './getParts'
 export default {
   name: 'RobotTorsos',
   data() {
