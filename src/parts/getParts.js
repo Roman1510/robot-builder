@@ -16,5 +16,5 @@ export default () => {
     )
   })
 
-  return parts
+  return { parts }
 }

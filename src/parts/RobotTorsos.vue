@@ -14,6 +14,6 @@
 <script setup>
 import getParts from './getParts'
 import { ref } from 'vue'
-const parts = getParts()
-const torsos = ref(parts.torsos)
+const { parts } = getParts()
+const torsos = ref(parts.value.torsos)
 </script>

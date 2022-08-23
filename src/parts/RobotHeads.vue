@@ -13,6 +13,6 @@
 <script setup>
 import getParts from './getParts'
 import { ref } from 'vue'
-const parts = getParts()
-const heads = ref(parts.heads)
+const { parts } = getParts()
+const heads = ref(parts.value.heads)
 </script>

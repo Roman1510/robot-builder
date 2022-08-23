@@ -13,6 +13,6 @@
 <script setup>
 import getParts from './getParts'
 import { ref } from 'vue'
-const parts = getParts()
-const bases = ref(parts.bases)
+const { parts } = getParts()
+const bases = ref(parts.value.bases)
 </script>

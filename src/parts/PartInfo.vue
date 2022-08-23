@@ -11,12 +11,12 @@ const props = defineProps({
 })
 
 const part = computed(() => {
-  const parts = getParts()
-  return parts[props.partType].find((part) => part.id == props.id)
+  const { parts } = getParts()
+  return parts.value[props.partType]?.find((part) => part.id == props.id)
 })
 </script>
 <template>
-  <div>
+  <div v-if="part">
     <h1>{{ part.title }}</h1>
     <div>{{ part.description }}</div>
   </div>
