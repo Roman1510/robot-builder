@@ -1,6 +1,6 @@
 <script setup>
 import { computed } from 'vue'
-import parts from './getParts'
+import getParts from './getParts'
 
 const props = defineProps({
   partType: { type: String },
@@ -11,7 +11,7 @@ const props = defineProps({
 })
 
 const part = computed(() => {
-  console.log('this is parts from the api', parts)
+  const parts = getParts()
   return parts[props.partType].find((part) => part.id == props.id)
 })
 </script>

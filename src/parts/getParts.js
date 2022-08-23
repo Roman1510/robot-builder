@@ -3,7 +3,7 @@ import { useStore } from 'vuex'
 
 export default () => {
   const store = useStore()
-  store.state.dispatch('getParts')
+  store.dispatch('getParts')
 
   const parts = computed(() => {
     return (

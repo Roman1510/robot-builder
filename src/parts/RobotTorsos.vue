@@ -11,12 +11,9 @@
   </div>
 </template>
 
-<script>
-import parts from './getParts'
-export default {
-  name: 'RobotTorsos',
-  data() {
-    return { torsos: parts.torsos }
-  },
-}
+<script setup>
+import getParts from './getParts'
+import { ref } from 'vue'
+const parts = getParts()
+const torsos = ref(parts.torsos)
 </script>

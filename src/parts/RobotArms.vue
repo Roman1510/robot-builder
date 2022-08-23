@@ -10,12 +10,9 @@
   </div>
 </template>
 
-<script>
-import parts from './getParts'
-export default {
-  name: 'RobotArms',
-  data() {
-    return { arms: parts.arms }
-  },
-}
+<script setup>
+import getParts from './getParts'
+import { ref } from 'vue'
+const parts = getParts()
+const arms = ref(parts.arms)
 </script>
