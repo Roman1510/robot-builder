@@ -11,11 +11,7 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'BrowseParts',
-}
-</script>
+<script setup></script>
 
 <style scoped>
 h1 {
