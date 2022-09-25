@@ -16,7 +16,7 @@ export default createStore({
       axios
         .get('/api/parts')
         .then((result) => commit('updateParts', result.data))
-        .catch(console.error)
+        .catch((error) => console.error(error))
     },
   },
   mutations: {
