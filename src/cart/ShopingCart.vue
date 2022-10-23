@@ -5,11 +5,11 @@ import { useStore } from 'vuex'
 const store = useStore()
 
 const cart = computed(() => {
-  return store.state.cart
+  return store.state.robots.cart
 })
 
 const cartSaleItems = computed(() => {
-  return store.getters.cartSaleItems
+  return store.getters['robots/cartSaleItems']
 })
 </script>
 <template>

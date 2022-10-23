@@ -3,11 +3,11 @@ import { useStore } from 'vuex'
 
 export default () => {
   const store = useStore()
-  store.dispatch('getParts')
+  store.dispatch('robot/getParts')
 
   const parts = computed(() => {
     return (
-      store.state.parts || {
+      store.state.robots.parts || {
         heads: [],
         arms: [],
         torsos: [],

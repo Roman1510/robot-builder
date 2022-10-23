@@ -3,16 +3,10 @@
     <h2>Arms</h2>
     The arms are how your robot will interact with the world. They come in a
     variety of shapes and functions.
-    <div v-for="(arm, idx) in arms" :key="idx">
-      <h4>{{ arm.title }}</h4>
-      <div>{{ arm.description }}</div>
-    </div>
+    <RobotPartCommon :part-type="arms" />
   </div>
 </template>
 
 <script setup>
-import getParts from './getParts'
-import { ref } from 'vue'
-const { parts } = getParts()
-const arms = ref(parts.value.arms)
+import RobotPartCommon from './RobotPartCommon.vue'
 </script>

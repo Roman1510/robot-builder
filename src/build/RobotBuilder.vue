@@ -5,6 +5,7 @@ import PreviewRobot from './PreviewRobot.vue'
 import CollapsibleArea from '../shared/CollapsibleArea.vue'
 import { onBeforeRouteLeave } from 'vue-router'
 import { useStore } from 'vuex'
+import router from '../router'
 
 const store = useStore()
 const addedToCard = ref(false)
@@ -16,10 +17,10 @@ const selectedRobot = ref({
   leftArm: {},
 })
 
-store.dispatch('getParts')
+store.dispatch('robots/getParts')
 
 const availableParts = computed(() => {
-  return store.state.parts
+  return store.state.robots.parts
 })
 
 const addToCard = () => {
@@ -30,7 +31,9 @@ const addToCard = () => {
     robot.torso.cost +
     robot.leftArm.cost +
     robot.rightArm.cost
-  store.commit('addRobotToCart', { ...selectedRobot.value, cost })
+  store
+    .dispatch('robots/addRobotToCart', { ...selectedRobot.value, cost })
+    .then(() => router.push('/cart'))
   addedToCard.value = true
 }
 

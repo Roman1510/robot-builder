@@ -1,5 +1,3 @@
-<script setup></script>
-
 <template>
   <div class="home">
     <div>
@@ -11,6 +9,8 @@
     </div>
   </div>
 </template>
+
+<script setup></script>
 
 <style scoped>
 .home {

@@ -1,3 +1,10 @@
+<template>
+  <div v-if="part">
+    <h1>{{ part.title }}</h1>
+    <div>{{ part.description }}</div>
+  </div>
+</template>
+
 <script setup>
 import { computed } from 'vue'
 import getParts from './getParts'
@@ -15,10 +22,5 @@ const part = computed(() => {
   return parts.value[props.partType]?.find((part) => part.id == props.id)
 })
 </script>
-<template>
-  <div v-if="part">
-    <h1>{{ part.title }}</h1>
-    <div>{{ part.description }}</div>
-  </div>
-</template>
+
 <style scoped></style>

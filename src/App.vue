@@ -5,7 +5,7 @@ import { useStore } from 'vuex'
 const store = useStore()
 
 const counter = computed(() => {
-  return store.state.cart.length
+  return store.state.robots.cart.length
 })
 </script>
 
