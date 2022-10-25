@@ -7,9 +7,35 @@ const store = useStore()
 const counter = computed(() => {
   return store.state.robots.cart.length
 })
+const rootFoo = computed(() => {
+  return store.state.foo
+})
+const usersFoo = computed(() => {
+  return store.state.users.foo
+})
+const robotsFoo = computed(() => {
+  return store.state.robots.foo
+})
+const rootFooGetter = computed(() => {
+  return store.getters.foo
+})
+const usersFooGetter = computed(() => {
+  return store.getters['users/foo']
+})
+const robotsFooGetter = computed(() => {
+  return store.getters['robots/foo']
+})
 </script>
 
 <template>
+  <div>
+    root foo:{{ rootFoo }} <br />
+    users foo:{{ usersFoo }} <br />
+    robots foo:{{ robotsFoo }} <br />
+    root foo-getter:{{ rootFooGetter }} <br />
+    users foo-getter:{{ usersFooGetter }} <br />
+    robots foo-getter:{{ robotsFooGetter }} <br />
+  </div>
   <div class="header">
     <nav>
       <ul>
